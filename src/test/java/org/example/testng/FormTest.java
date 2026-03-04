@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.pom.FormPom;
 import org.example.utils.Driver;
-import org.example.utils.DriverHolder;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -43,7 +42,6 @@ public class FormTest {
         log.info("Initializing WebDriver");
         driver = Driver.getDriverFromEnv();
         driver.manage().window().maximize();
-        DriverHolder.set(driver);
         log.info("Browser launched and maximized");
     }
 
@@ -94,7 +92,6 @@ public class FormTest {
     public void afterMethod() {
         if (driver != null) {
             log.info("Closing browser");
-            DriverHolder.remove();
             driver.quit();
         }
     }
