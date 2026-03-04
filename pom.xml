@@ -101,5 +101,11 @@
       <artifactId>aspectjweaver</artifactId>
       <version>${aspectj.version}</version>
     </dependency>
+    <!-- AspectJ runtime (annotations for @Aspect, @Around etc.) -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
   </dependencies>
 </project>
