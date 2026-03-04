@@ -45,6 +45,12 @@ jobs:
           SELENOID_URL: http://127.0.0.1:4444/wd/hub
         run: mvn -B test
 
+      - name: Stop selenoid gracefully
+        if: always()
+        run: |
+          docker compose -f docker-compose.yml stop selenoid
+          sleep 5
+
       - name: Check video directory
         if: always()
         run: |
