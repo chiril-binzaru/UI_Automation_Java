@@ -1,5 +1,6 @@
 package org.example.pom;
 
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -43,6 +44,7 @@ public class FormPom {
         this.wait = new WebDriverWait(driverParam, Duration.ofSeconds(15));
     }
 
+    @Step("Open Practice Form")
     public void openPracticeForm() {
         log.info("Navigating to Practice Form");
         closeAdvert();
@@ -53,32 +55,38 @@ public class FormPom {
         log.info("Practice Form opened");
     }
 
+    @Step("Set first name: {value}")
     public void setFirstName(String value) {
         log.debug("Setting first name: {}", value);
         type(firstName, value);
     }
 
+    @Step("Set last name: {value}")
     public void setLastName(String value) {
         log.debug("Setting last name: {}", value);
         type(lastName, value);
     }
 
+    @Step("Set email: {value}")
     public void setEmail(String value) {
         log.debug("Setting email: {}", value);
         type(userEmail, value);
     }
 
+    @Step("Select gender: {gender}")
     public void setGender(String gender) {
         log.debug("Selecting gender: {}", gender);
         By genderLocator = By.xpath("//*[@id='genterWrapper']//label[text()='" + gender + "']");
         wait.until(ExpectedConditions.elementToBeClickable(genderLocator)).click();
     }
 
+    @Step("Set mobile: {value}")
     public void setMobile(String value) {
         log.debug("Setting mobile: {}", value);
         type(userNumber, value);
     }
 
+    @Step("Set date of birth: {day} {month} {year}")
     public void setDateOfBirth(int day, String month, String year) {
         log.debug("Setting date of birth: {} {} {}", day, month, year);
         wait.until(ExpectedConditions.elementToBeClickable(dateOfBirthInput)).click();
@@ -91,6 +99,7 @@ public class FormPom {
         wait.until(ExpectedConditions.elementToBeClickable(dayLocator)).click();
     }
 
+    @Step("Set subject: {subject}")
     public void setSubject(String subject) {
         log.debug("Setting subject: {}", subject);
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(subjectsInput));
@@ -98,22 +107,26 @@ public class FormPom {
         input.sendKeys(Keys.ENTER);
     }
 
+    @Step("Select hobby: {hobby}")
     public void setHobby(String hobby) {
         log.debug("Selecting hobby: {}", hobby);
         By hobbyLocator = By.xpath("//*[@id='hobbiesWrapper']//label[text()='" + hobby + "']");
         wait.until(ExpectedConditions.elementToBeClickable(hobbyLocator)).click();
     }
 
+    @Step("Upload picture: {absolutePath}")
     public void uploadPicture(String absolutePath) {
         log.debug("Uploading picture: {}", absolutePath);
         wait.until(ExpectedConditions.presenceOfElementLocated(uploadPicture)).sendKeys(absolutePath);
     }
 
+    @Step("Set current address: {value}")
     public void setCurrentAddress(String value) {
         log.debug("Setting current address: {}", value);
         type(currentAddress, value);
     }
 
+    @Step("Set state: {state}, city: {city}")
     public void setStateAndCity(String state, String city) {
         log.debug("Setting state: {}, city: {}", state, city);
         closeAdvert();
@@ -129,6 +142,7 @@ public class FormPom {
         cityInput.sendKeys(Keys.ENTER);
     }
 
+    @Step("Submit the form")
     public void submit() {
         log.info("Submitting the form");
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(submitButton));

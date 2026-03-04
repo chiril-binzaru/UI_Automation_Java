@@ -1,5 +1,7 @@
 package org.example.testng;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.pom.FormPom;
@@ -44,6 +46,8 @@ public class FormTest {
     }
 
     @Test
+    @Feature("Practice Form")
+    @Description("Fill out the practice form and verify all submitted values")
     public void formTest() {
         log.info("Starting formTest");
         driver.get(URL);
