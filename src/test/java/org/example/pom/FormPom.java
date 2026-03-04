@@ -1,5 +1,7 @@
 package org.example.pom;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class FormPom {
+
+    private static final Logger log = LogManager.getLogger(FormPom.class);
 
     private final WebDriver driver;
     private final JavascriptExecutor js;
@@ -40,35 +44,43 @@ public class FormPom {
     }
 
     public void openPracticeForm() {
+        log.info("Navigating to Practice Form");
         closeAdvert();
         jsClick(formsCard);
         closeAdvert();
         jsClick(practiceFormMenu);
         closeAdvert();
+        log.info("Practice Form opened");
     }
 
     public void setFirstName(String value) {
+        log.debug("Setting first name: {}", value);
         type(firstName, value);
     }
 
     public void setLastName(String value) {
+        log.debug("Setting last name: {}", value);
         type(lastName, value);
     }
 
     public void setEmail(String value) {
+        log.debug("Setting email: {}", value);
         type(userEmail, value);
     }
 
     public void setGender(String gender) {
+        log.debug("Selecting gender: {}", gender);
         By genderLocator = By.xpath("//*[@id='genterWrapper']//label[text()='" + gender + "']");
         wait.until(ExpectedConditions.elementToBeClickable(genderLocator)).click();
     }
 
     public void setMobile(String value) {
+        log.debug("Setting mobile: {}", value);
         type(userNumber, value);
     }
 
     public void setDateOfBirth(int day, String month, String year) {
+        log.debug("Setting date of birth: {} {} {}", day, month, year);
         wait.until(ExpectedConditions.elementToBeClickable(dateOfBirthInput)).click();
         new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("react-datepicker__month-select"))))
                 .selectByVisibleText(month);
@@ -80,25 +92,30 @@ public class FormPom {
     }
 
     public void setSubject(String subject) {
+        log.debug("Setting subject: {}", subject);
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(subjectsInput));
         input.sendKeys(subject);
         input.sendKeys(Keys.ENTER);
     }
 
     public void setHobby(String hobby) {
+        log.debug("Selecting hobby: {}", hobby);
         By hobbyLocator = By.xpath("//*[@id='hobbiesWrapper']//label[text()='" + hobby + "']");
         wait.until(ExpectedConditions.elementToBeClickable(hobbyLocator)).click();
     }
 
     public void uploadPicture(String absolutePath) {
+        log.debug("Uploading picture: {}", absolutePath);
         wait.until(ExpectedConditions.presenceOfElementLocated(uploadPicture)).sendKeys(absolutePath);
     }
 
     public void setCurrentAddress(String value) {
+        log.debug("Setting current address: {}", value);
         type(currentAddress, value);
     }
 
     public void setStateAndCity(String state, String city) {
+        log.debug("Setting state: {}, city: {}", state, city);
         closeAdvert();
         jsClick(stateContainer);
         WebElement stateInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("react-select-3-input")));
@@ -113,18 +130,23 @@ public class FormPom {
     }
 
     public void submit() {
+        log.info("Submitting the form");
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", button);
         button.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(modalTitle));
+        log.info("Form submitted successfully");
     }
 
     public String getSubmittedValue(String label) {
         By valueLocator = By.xpath("//td[text()='" + label + "']/following-sibling::td");
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(valueLocator)).getText().trim();
+        String value = wait.until(ExpectedConditions.visibilityOfElementLocated(valueLocator)).getText().trim();
+        log.debug("Submitted value for '{}': {}", label, value);
+        return value;
     }
 
     public void closeAdvert() {
+        log.debug("Removing ad overlays");
         try {
             js.executeScript("var elem = document.evaluate(\"//*[@id='adplus-anchor']\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
                     "if (elem && elem.parentNode) { elem.parentNode.removeChild(elem); }");

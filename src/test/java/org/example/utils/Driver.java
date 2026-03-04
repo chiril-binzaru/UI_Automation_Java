@@ -1,6 +1,8 @@
 package org.example.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,8 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Driver {
+    private static final Logger log = LogManager.getLogger(Driver.class);
+
     static public WebDriver getAutoLocalDriver() {
-        WebDriverManager.chromedriver().setup(); // sets up ChromeDriver automatically
+        log.info("Setting up local ChromeDriver via WebDriverManager");
+        WebDriverManager.chromedriver().setup();
         return new ChromeDriver();
     }
 
@@ -29,12 +34,15 @@ public class Driver {
     public static WebDriver getDriverFromEnv() {
         Map<String, String> env = System.getenv();
         if ("true".equalsIgnoreCase(env.getOrDefault("USE_REMOTE_DRIVER", "false"))) {
+            log.info("USE_REMOTE_DRIVER=true, using remote WebDriver");
             return getRemoteDriver();
         }
+        log.info("USE_REMOTE_DRIVER not set, using local WebDriver");
         return getAutoLocalDriver();
     }
 
     public static RemoteWebDriver getRemoteDriver() {
+        log.info("Creating remote WebDriver");
         ChromeOptions options = new ChromeOptions();
         options.setCapability("browserVersion", "128.0");
         options.setCapability("selenoid:options", new HashMap<String, Object>() {{
@@ -63,10 +71,13 @@ public class Driver {
         }});
         try {
             String selenoidUrl = System.getenv().getOrDefault("SELENOID_URL", "http://localhost:4444/wd/hub");
+            log.info("Connecting to Selenoid at: {}", selenoidUrl);
             RemoteWebDriver remoteDriver = new RemoteWebDriver(new URL(selenoidUrl), options);
             remoteDriver.setFileDetector(new LocalFileDetector());
+            log.info("Remote WebDriver created successfully");
             return remoteDriver;
         } catch (MalformedURLException e) {
+            log.error("Invalid SELENOID_URL value: {}", System.getenv().getOrDefault("SELENOID_URL", "http://localhost:4444/wd/hub"));
             throw new RuntimeException("Invalid SELENOID_URL value", e);
         }
     }

@@ -1,5 +1,7 @@
 package org.example.testng;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.pom.FormPom;
 import org.example.utils.Driver;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +13,8 @@ import org.testng.annotations.Test;
 import java.nio.file.Path;
 
 public class FormTest {
+
+    private static final Logger log = LogManager.getLogger(FormTest.class);
 
     static public WebDriver driver;
     static public String URL = "https://demoqa.com/";
@@ -33,13 +37,17 @@ public class FormTest {
 
     @BeforeMethod
     public void beforeMethod() {
+        log.info("Initializing WebDriver");
         driver = Driver.getDriverFromEnv();
         driver.manage().window().maximize();
+        log.info("Browser launched and maximized");
     }
 
     @Test
     public void formTest() {
+        log.info("Starting formTest");
         driver.get(URL);
+        log.info("Navigated to {}", URL);
         FormPom formPom = new FormPom(driver);
 
         formPom.openPracticeForm();
@@ -61,6 +69,7 @@ public class FormTest {
         formPom.setStateAndCity(STATE, CITY);
         formPom.submit();
 
+        log.info("Verifying submitted values");
         Assert.assertEquals(formPom.getSubmittedValue("Student Name"), FIRST_NAME + " " + LAST_NAME);
         Assert.assertEquals(formPom.getSubmittedValue("Student Email"), EMAIL);
         Assert.assertEquals(formPom.getSubmittedValue("Gender"), GENDER);
@@ -71,11 +80,13 @@ public class FormTest {
         Assert.assertEquals(formPom.getSubmittedValue("Picture"), PICTURE_NAME);
         Assert.assertEquals(formPom.getSubmittedValue("Address"), ADDRESS);
         Assert.assertEquals(formPom.getSubmittedValue("State and City"), STATE + " " + CITY);
+        log.info("formTest passed");
     }
 
     @AfterMethod
     public void afterMethod() {
         if (driver != null) {
+            log.info("Closing browser");
             driver.quit();
         }
     }
