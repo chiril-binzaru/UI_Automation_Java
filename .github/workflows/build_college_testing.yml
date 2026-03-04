@@ -65,6 +65,14 @@ jobs:
           path: ./target/surefire-reports
           if-no-files-found: warn
 
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: ./target/allure-results
+          if-no-files-found: warn
+
       - name: Upload video
         if: always()
         uses: actions/upload-artifact@v4
@@ -78,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: logs
-          path: ./logs
+          path: ./target/logs
           if-no-files-found: warn
 
       - name: Stop containers
