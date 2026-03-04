@@ -85,6 +85,7 @@ public class FormTest {
         Assert.assertEquals(formPom.getSubmittedValue("Address"), ADDRESS);
         Assert.assertEquals(formPom.getSubmittedValue("State and City"), STATE + " " + CITY);
         log.info("formTest passed");
+        Thread.sleep(5000);
     }
 
     @AfterMethod
