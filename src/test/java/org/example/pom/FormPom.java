@@ -40,8 +40,10 @@ public class FormPom {
     }
 
     public void openPracticeForm() {
-        wait.until(ExpectedConditions.elementToBeClickable(formsCard)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(practiceFormMenu)).click();
+        closeAdvert();
+        jsClick(formsCard);
+        closeAdvert();
+        jsClick(practiceFormMenu);
         closeAdvert();
     }
 
@@ -97,12 +99,14 @@ public class FormPom {
     }
 
     public void setStateAndCity(String state, String city) {
-        wait.until(ExpectedConditions.elementToBeClickable(stateContainer)).click();
+        closeAdvert();
+        jsClick(stateContainer);
         WebElement stateInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("react-select-3-input")));
         stateInput.sendKeys(state);
         stateInput.sendKeys(Keys.ENTER);
 
-        wait.until(ExpectedConditions.elementToBeClickable(cityContainer)).click();
+        closeAdvert();
+        jsClick(cityContainer);
         WebElement cityInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("react-select-4-input")));
         cityInput.sendKeys(city);
         cityInput.sendKeys(Keys.ENTER);
@@ -131,6 +135,12 @@ public class FormPom {
                     "if (elem && elem.parentNode) { elem.parentNode.removeChild(elem); }");
         } catch (Exception ignored) {
         }
+    }
+
+    private void jsClick(By locator) {
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        js.executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+        js.executeScript("arguments[0].click();", element);
     }
 
     private void type(By locator, String value) {

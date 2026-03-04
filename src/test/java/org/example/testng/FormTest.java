@@ -27,7 +27,7 @@ public class FormTest {
     static public String HOBBY = "Sports";
     static public String ADDRESS = "Chisinau, 123 Street";
     static public String STATE = "NCR";
-    static public String CITY = "Chisinau";
+    static public String CITY = "Noida";
 
     static public String PICTURE_NAME = "test-picture.txt";
 
@@ -65,7 +65,7 @@ public class FormTest {
         Assert.assertEquals(formPom.getSubmittedValue("Student Email"), EMAIL);
         Assert.assertEquals(formPom.getSubmittedValue("Gender"), GENDER);
         Assert.assertEquals(formPom.getSubmittedValue("Mobile"), MOBILE);
-        Assert.assertEquals(formPom.getSubmittedValue("Date of Birth"), "01 January,2000");
+        Assert.assertEquals(formPom.getSubmittedValue("Date of Birth"), "20 May,2005");
         Assert.assertEquals(formPom.getSubmittedValue("Subjects"), SUBJECT);
         Assert.assertEquals(formPom.getSubmittedValue("Hobbies"), HOBBY);
         Assert.assertEquals(formPom.getSubmittedValue("Picture"), PICTURE_NAME);
