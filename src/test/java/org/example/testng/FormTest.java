@@ -16,18 +16,18 @@ public class FormTest {
     static public String URL = "https://demoqa.com/";
 
     static public String FIRST_NAME = "Chiril";
-    static public String LAST_NAME = "Dones";
-    static public String EMAIL = "chirildones@gmail.com";
+    static public String LAST_NAME = "Binzaru";
+    static public String EMAIL = "chirilbinzaru@gmail.com";
     static public String GENDER = "Male";
-    static public String MOBILE = "9911122233";
-    static public int BIRTH_DAY = 1;
-    static public String BIRTH_MONTH = "January";
-    static public String BIRTH_YEAR = "2000";
-    static public String SUBJECT = "Maths";
+    static public String MOBILE = "5599900044";
+    static public int BIRTH_DAY = 20;
+    static public String BIRTH_MONTH = "May";
+    static public String BIRTH_YEAR = "2005";
+    static public String SUBJECT = "Biology";
     static public String HOBBY = "Sports";
-    static public String ADDRESS = "Chisinau, Test street 10";
+    static public String ADDRESS = "Chisinau, 123 Street";
     static public String STATE = "NCR";
-    static public String CITY = "Delhi";
+    static public String CITY = "Chisinau";
 
     static public String PICTURE_NAME = "test-picture.txt";
 
